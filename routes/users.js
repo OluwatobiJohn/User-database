@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
+require('../config/passport') (passport);
+
 
 
 //Get Log in and Sign Up
@@ -72,8 +75,11 @@ router.post('/register', (req, res) => {
 });
 
 
-router.post('/login', (req, res) => {
-
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        faliureRedirect: '/users/login',
+    }) (req, res, next);
 });
 
 

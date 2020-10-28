@@ -3,6 +3,8 @@ const router = express.Router();
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+require('./config/passport') (passport);
 require('dotenv/config');
 
 
@@ -16,6 +18,9 @@ mongoose.connect( process.env.DB_CONNECTION, { useNewUrlParser: true, useUnified
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Routes
 app.use('/', require('./routes/index'));

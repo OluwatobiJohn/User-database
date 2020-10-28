@@ -13,4 +13,8 @@ router.get('/register', (req, res) => {
     res.send('This is the Sign up page');
 });
 
+//Dashboard
+router.get('/dashboard', (req, res) => {
+    res.send('Dashboard');
+})
 module.exports = router;
