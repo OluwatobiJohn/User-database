@@ -6,7 +6,7 @@ const checkLogin = require('../middleware/checklogin')
 //ROUTES
 
 //All Notes
-router.get('/', async (req, res) => {
+router.get('/',checkLogin, async (req, res) => {
     try {
         const notes = await Post.find();
         res.send(notes);
@@ -40,7 +40,7 @@ router.post('/',checkLogin, [
 });
 
 //Specific Note
-router.get('/:noteId', async (req, res) => {
+router.get('/:noteId',checkLogin, async (req, res) => {
     try{
     const note = await Post.findById(req.params.noteId);
     res.json(note);
@@ -50,7 +50,7 @@ router.get('/:noteId', async (req, res) => {
 })
 
 //Delete Note
-router.delete('/:noteId', async (req, res) => {
+router.delete('/:noteId',checkLogin, async (req, res) => {
     try{
     const deleteNote = await Post.findByIdAndDelete(req.params.noteId);
     res.json(deleteNote);
@@ -60,7 +60,7 @@ router.delete('/:noteId', async (req, res) => {
 })
 
 //Update a post
-router.patch('/:noteId', async (req, res) => {
+router.patch('/:noteId',checkLogin, async (req, res) => {
     try {
     const updatePost = await Post.updateOne(
         {_id: req.params.noteId}, 

@@ -25,7 +25,9 @@ app.use(passport.session());
 //Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-
+// Import Routes
+const notesRoute = require('./routes/notes');
+app.use('/notes', notesRoute)
 
 //Port Listen
 app.listen(3000, () => {
