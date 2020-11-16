@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const checkLogin = require('../middleware/checklogin')
 
 
 //Log in
-router.get('/', (req,res) => {
+router.get('/home', (req,res) => {
     res.send('This is the Welcome page');
 });
 
@@ -13,8 +14,10 @@ router.get('/register', (req, res) => {
     res.send('This is the Sign up page');
 });
 
+
+module.exports = router;
 //Dashboard
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', checkLogin,(req, res) => {
     res.send('Dashboard');
 })
-module.exports = router;
+

@@ -81,10 +81,10 @@ router.post('/login', (req, res, next) => {
         if(!user){return res.json(info.message);}
         req.logIn(user, function(err) {
             if (err) {return next(err);}
-            return res.redirect('/dashboard');
+            return res.send({message: "Login Success", token: info.token});
         })
     }, {
-        successRedirect: '/dashboard',
+        //successRedirect: '/dashboard',
         faliureRedirect: '/users/login',
     }) (req, res, next);
 });
