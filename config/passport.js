@@ -1,6 +1,8 @@
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+require('dotenv/config');
 
 module.exports = function(passport) {
     passport.use(
@@ -17,7 +19,15 @@ module.exports = function(passport) {
                 bcrypt.compare(password, user.password, (err, isMatch) => {
                     if (err) throw err;
                     if (isMatch) {
-                        return done(null, user);
+                       const token = jwt.sign({
+                            email: user.email,
+                            userId: user._id
+                        }, 
+                        process.env.JWT_KEY, 
+                        {
+                            expiresIn: "2h"
+                        })
+                        return done(null, user, {token: token});
                     } else {
                         return done(null, false, {message: 'Password is incorrect'});
                     }
